@@ -4,6 +4,10 @@ namespace App\Entity;
 
 use App\Repository\TravelRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
+//use Doctrine\Common\Collections\ArrayCollection;
+//use Doctrine\Common\Collections\Collection;
+
 
 /**
  * @ORM\Entity(repositoryClass=TravelRepository::class)
@@ -67,10 +71,18 @@ class Travel
      */
     private $baseline;
 
+    /**
+     * @Groups({"travel_browse"})
+     */
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @Groups({"travel_browse"})
+     */
 
     public function getName(): ?string
     {
@@ -96,6 +108,10 @@ class Travel
         return $this;
     }
 
+     /**
+     * @Groups({"travel_browse"})
+     */
+
     public function getIsLiked(): ?bool
     {
         return $this->is_liked;
@@ -108,6 +124,10 @@ class Travel
         return $this;
     }
 
+     /**
+     * @Groups({"travel_browse"})
+     */
+
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -119,6 +139,10 @@ class Travel
 
         return $this;
     }
+
+    /**
+     * @Groups({"travel_browse"})
+     */
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -144,6 +168,7 @@ class Travel
         return $this;
     }
 
+
     public function getImage(): ?array
     {
         return $this->image;
@@ -155,6 +180,10 @@ class Travel
 
         return $this;
     }
+
+    /**
+     * @Groups({"travel_browse"})
+     */
 
     public function getPrice(): ?int
     {
@@ -179,6 +208,10 @@ class Travel
 
         return $this;
     }
+
+    /**
+     * @Groups({"travel_browse"})
+     */
 
     public function getBaseline(): ?string
     {
