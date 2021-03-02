@@ -295,7 +295,6 @@ class Travel
     {
         if ($this->categories->removeElement($category)) {
             $category->removeTravel($this);
-            $category->addTravel($this);
         }
 
         return $this;
