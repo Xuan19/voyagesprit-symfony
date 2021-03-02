@@ -83,10 +83,16 @@ class Travel
      */
     private $categories;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Date::class, inversedBy="travels")
+     */
+    private $dates;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
+        $this->dates = new ArrayCollection();
     }
 
     /**
@@ -295,6 +301,33 @@ class Travel
     {
         if ($this->categories->removeElement($category)) {
             $category->removeTravel($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Date[]
+     */
+    public function getDates(): Collection
+    {
+        return $this->dates;
+    }
+
+    public function addDate(Date $date): self
+    {
+        if (!$this->dates->contains($date)) {
+            $this->dates[] = $date;
+            $date->addTravel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDate(Date $date): self
+    {
+        if ($this->dates->removeElement($date)) {
+            $date->removeTravel($this);
         }
 
         return $this;
