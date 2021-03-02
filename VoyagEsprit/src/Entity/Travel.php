@@ -78,9 +78,15 @@ class Travel
      */
     private $comments;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=Category::class, inversedBy="travels")
+     */
+    private $categories;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
     /**
@@ -238,7 +244,6 @@ class Travel
     }
 
     /**
-     * @Groups ({"travel_browse"})
      * @return Collection|Comment[]
      */
     public function getComments(): Collection
@@ -263,6 +268,33 @@ class Travel
             if ($comment->getTravel() === $this) {
                 $comment->setTravel(null);
             }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategories(): Collection
+    {
+        return $this->categories;
+    }
+
+    public function addCategory(Category $category): self
+    {
+        if (!$this->categories->contains($category)) {
+            $this->categories[] = $category;
+            $category->addTravel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCategory(Category $category): self
+    {
+        if ($this->categories->removeElement($category)) {
+            $category->removeTravel($this);
         }
 
         return $this;
