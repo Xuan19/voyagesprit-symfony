@@ -97,6 +97,7 @@ class Category
     {
         if (!$this->travels->contains($travel)) {
             $this->travels[] = $travel;
+            $travel->addCategory($this);
         }
 
         return $this;
@@ -105,6 +106,8 @@ class Category
     public function removeTravel(Travel $travel): self
     {
         $this->travels->removeElement($travel);
+
+        $travel->removeCategory($this);
 
         return $this;
     }
