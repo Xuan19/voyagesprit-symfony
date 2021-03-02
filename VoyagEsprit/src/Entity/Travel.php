@@ -88,11 +88,17 @@ class Travel
      */
     private $dates;
 
+    /**
+     * @ORM\ManyToMany(targetEntity=City::class, mappedBy="travels")
+     */
+    private $cities;
+
     public function __construct()
     {
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->dates = new ArrayCollection();
+        $this->cities = new ArrayCollection();
     }
 
     /**
@@ -328,6 +334,33 @@ class Travel
     {
         if ($this->dates->removeElement($date)) {
             $date->removeTravel($this);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection|City[]
+     */
+    public function getCities(): Collection
+    {
+        return $this->cities;
+    }
+
+    public function addCity(City $city): self
+    {
+        if (!$this->cities->contains($city)) {
+            $this->cities[] = $city;
+            $city->addTravel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCity(City $city): self
+    {
+        if ($this->cities->removeElement($city)) {
+            $city->removeTravel($this);
         }
 
         return $this;
