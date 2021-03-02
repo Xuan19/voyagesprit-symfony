@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\TravelRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
 //use Doctrine\Common\Collections\ArrayCollection;
@@ -70,6 +72,16 @@ class Travel
      * @ORM\Column(type="text", nullable=true)
      */
     private $baseline;
+
+    /**
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="travel", orphanRemoval=true)
+     */
+    private $comments;
+
+    public function __construct()
+    {
+        $this->comments = new ArrayCollection();
+    }
 
     /**
      * @Groups({"travel_browse"})
@@ -221,6 +233,37 @@ class Travel
     public function setBaseline(?string $baseline): self
     {
         $this->baseline = $baseline;
+
+        return $this;
+    }
+
+    /**
+     * @Groups ({"travel_browse"})
+     * @return Collection|Comment[]
+     */
+    public function getComments(): Collection
+    {
+        return $this->comments;
+    }
+
+    public function addComment(Comment $comment): self
+    {
+        if (!$this->comments->contains($comment)) {
+            $this->comments[] = $comment;
+            $comment->setTravel($this);
+        }
+
+        return $this;
+    }
+
+    public function removeComment(Comment $comment): self
+    {
+        if ($this->comments->removeElement($comment)) {
+            // set the owning side to null (unless already changed)
+            if ($comment->getTravel() === $this) {
+                $comment->setTravel(null);
+            }
+        }
 
         return $this;
     }

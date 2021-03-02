@@ -42,6 +42,12 @@ class Comment
      */
     private $rating;
 
+    /**
+     * @ORM\ManyToOne(targetEntity=Travel::class, inversedBy="comments")
+     * @ORM\JoinColumn(nullable=false)
+     */
+    private $travel;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -103,6 +109,18 @@ class Comment
     public function setRating(float $rating): self
     {
         $this->rating = $rating;
+
+        return $this;
+    }
+
+    public function getTravel(): ?Travel
+    {
+        return $this->travel;
+    }
+
+    public function setTravel(?Travel $travel): self
+    {
+        $this->travel = $travel;
 
         return $this;
     }
