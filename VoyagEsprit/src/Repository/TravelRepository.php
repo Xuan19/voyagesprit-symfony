@@ -19,6 +19,47 @@ class TravelRepository extends ServiceEntityRepository
         parent::__construct($registry, Travel::class);
     }
 
+
+    public function getTravelsWithRelations()
+    {
+     $qb=$this->createQueryBuilder('t');
+
+     $qb
+        ->addSelect('d,c,cs')
+        ->leftjoin('t.categories','c')
+        ->leftjoin('t.dates','d')
+        ->leftjoin('t.cities','cs')
+        ->orderBy('d.startAt', 'DESC')
+
+   ;
+
+      return $qb->getQuery()->getResult();
+
+    }
+
+
+    public function getTravelWithRelations(int $id)
+    {
+     $qb=$this->createQueryBuilder('t');
+
+     $qb
+        ->addSelect('d,c,cs')
+        ->leftjoin('t.categories','c')
+        ->leftjoin('t.dates','d')
+        ->leftjoin('t.cities','cs')
+        ->orderBy('d.startAt', 'DESC')
+        ->where('t.id= :id')
+        ->setParameter(':id',$id)
+
+   ;
+
+      return $qb->getQuery()->getResult();
+
+    }
+
+
+
+
     // /**
     //  * @return Travel[] Returns an array of Travel objects
     //  */

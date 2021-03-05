@@ -29,6 +29,7 @@ App\Entity\Travel:
         categories: '<numberBetween(1,3)>x @category_*'
         is_liked: "<boolean()>"
         price_details: "<text(200)>"
+        display_homepage: "<boolean()>"
 
 App\Entity\Comment:
     comment_{1..24}:

@@ -16,20 +16,34 @@ class TravelController extends AbstractController
     #[Route('/travels', name: 'browse', methods:['GET'])]
     public function browse(TravelRepository $travelRepository,SerializerInterface $serializer): Response
     {
-        $travels=$travelRepository->findAll();
+        $travels=$travelRepository->getTravelsWithRelations();
 
-        $arrayTravels=$serializer->normalize($travels,null,['groups'=>'travel_browse']);
+        // $arrayTravels=$serializer->normalize($travels,null,['groups'=>'travel_browse']);
         
-        return $this->json($arrayTravels);
+        // return $this->json($arrayTravels);
+
+        return $this->json(
+        $travels,
+        200,
+        [],
+        ['groups' => 'travel_browse']);
     }
 
     #[Route('/travel/{id}', name: 'read', methods:['GET'])]
-    public function read(Travel $travel,SerializerInterface $serializer): Response
-    {
 
-        $arrayTravels=$serializer->normalize($travel,null,['groups'=>'travel_browse']);
+    public function read(int $id,SerializerInterface $serializer,TravelRepository $travelRepository): Response
+    {
+        $travel=$travelRepository->getTravelWithRelations($id);
         
-        return $this->json($arrayTravels);
+        // $arrayTravel=$serializer->normalize($travel,null,['groups'=>'travel_read']);
+
+        // return $this->json($arrayTravel);
+
+        return $this->json(
+            $travel,
+            200,
+            [],
+            ['groups' => 'travel_read']);
     }
 
 }

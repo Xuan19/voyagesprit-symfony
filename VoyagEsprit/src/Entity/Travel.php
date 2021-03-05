@@ -103,7 +103,7 @@ class Travel
     }
 
     /**
-     * @Groups({"travel_browse"})
+     * @Groups({"travel_browse","travel_read"})
      */
 
     public function getId(): ?int
@@ -112,7 +112,7 @@ class Travel
     }
 
     /**
-     * @Groups({"travel_browse"})
+     * @Groups({"travel_browse","travel_read"})
      */
 
     public function getName(): ?string
@@ -127,6 +127,11 @@ class Travel
         return $this;
     }
 
+
+    /**
+     * @Groups({"travel_read"})
+     */
+
     public function getProgram(): ?string
     {
         return $this->program;
@@ -140,7 +145,7 @@ class Travel
     }
 
      /**
-     * @Groups({"travel_browse"})
+     * @Groups({"travel_browse","travel_read"})
      */
 
     public function getIsLiked(): ?bool
@@ -155,10 +160,6 @@ class Travel
         return $this;
     }
 
-     /**
-     * @Groups({"travel_browse"})
-     */
-
     public function getCreatedAt(): ?\DateTimeInterface
     {
         return $this->createdAt;
@@ -170,10 +171,6 @@ class Travel
 
         return $this;
     }
-
-    /**
-     * @Groups({"travel_browse"})
-     */
 
     public function getUpdatedAt(): ?\DateTimeInterface
     {
@@ -187,6 +184,10 @@ class Travel
         return $this;
     }
 
+    /**
+     * @Groups({"travel_browse"})
+     */
+
     public function getDisplayHomepage(): ?bool
     {
         return $this->display_homepage;
@@ -199,6 +200,9 @@ class Travel
         return $this;
     }
 
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
 
     public function getImage(): ?array
     {
@@ -213,7 +217,7 @@ class Travel
     }
 
     /**
-     * @Groups({"travel_browse"})
+     * @Groups({"travel_browse","travel_read"})
      */
 
     public function getPrice(): ?int
@@ -228,6 +232,11 @@ class Travel
         return $this;
     }
 
+     /**
+     * @Groups({"travel_read"})
+     */
+
+
     public function getPriceDetails(): ?string
     {
         return $this->price_details;
@@ -241,7 +250,7 @@ class Travel
     }
 
     /**
-     * @Groups({"travel_browse"})
+     * @Groups({"travel_browse","travel_read"})
      */
 
     public function getBaseline(): ?string
@@ -258,7 +267,9 @@ class Travel
 
     /**
      * @return Collection|Comment[]
+     * @Groups({"travel_read"})
      */
+    
     public function getComments(): Collection
     {
         return $this->comments;
@@ -287,6 +298,7 @@ class Travel
     }
 
     /**
+     * @Groups({"travel_browse","travel_read"})
      * @return Collection|Category[]
      */
     public function getCategories(): Collection
@@ -314,6 +326,7 @@ class Travel
     }
 
     /**
+     * @Groups({"travel_browse","travel_read"})
      * @return Collection|Date[]
      */
     public function getDates(): Collection
@@ -341,6 +354,7 @@ class Travel
     }
 
     /**
+     * @Groups({"travel_browse","travel_read"})
      * @return Collection|City[]
      */
     public function getCities(): Collection
