@@ -24,22 +24,22 @@ class Travel
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="text",nullable=true)
      */
     private $name;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text",nullable=true)
      */
     private $program;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $is_liked;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",options={"default":"CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -49,7 +49,7 @@ class Travel
     private $updatedAt;
 
     /**
-     * @ORM\Column(type="boolean")
+     * @ORM\Column(type="boolean",nullable=true)
      */
     private $display_homepage;
 
@@ -59,7 +59,7 @@ class Travel
     private $image = [];
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer",nullable=true)
      */
     private $price;
 
@@ -95,6 +95,7 @@ class Travel
 
     public function __construct()
     {
+        $this->createdAt=new \DateTime();
         $this->comments = new ArrayCollection();
         $this->categories = new ArrayCollection();
         $this->dates = new ArrayCollection();

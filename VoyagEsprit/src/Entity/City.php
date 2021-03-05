@@ -30,7 +30,7 @@ class City
     private $travels;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",options={"default":"CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -46,6 +46,7 @@ class City
 
     public function __construct()
     {
+        $this->createdAt=new \DateTime();
         $this->travels = new ArrayCollection();
     }
 

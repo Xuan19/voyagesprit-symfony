@@ -20,12 +20,12 @@ class Date
     private $id;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $startAt;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="date", nullable=true)
      */
     private $endAt;
 
@@ -34,8 +34,19 @@ class Date
      */
     private $travels;
 
+    /**
+     * @ORM\Column(type="datetime",options={"default":"CURRENT_TIMESTAMP"})
+     */
+    private $CreatedAt;
+
+    /**
+     * @ORM\Column(type="datetime", nullable=true)
+     */
+    private $UpdatedAt;
+
     public function __construct()
     {
+        $this->createdAt=new \DateTime();
         $this->travels = new ArrayCollection();
     }
 
@@ -91,6 +102,30 @@ class Date
         $this->travels->removeElement($travel);
 
         $travel->removeDate($this);
+
+        return $this;
+    }
+
+    public function getCreatedAt(): ?\DateTimeInterface
+    {
+        return $this->CreatedAt;
+    }
+
+    public function setCreatedAt(\DateTimeInterface $CreatedAt): self
+    {
+        $this->CreatedAt = $CreatedAt;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->UpdatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $UpdatedAt): self
+    {
+        $this->UpdatedAt = $UpdatedAt;
 
         return $this;
     }

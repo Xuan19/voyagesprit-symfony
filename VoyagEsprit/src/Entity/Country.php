@@ -25,7 +25,7 @@ class Country
     private $name;
 
     /**
-     * @ORM\Column(type="datetime")
+     * @ORM\Column(type="datetime",options={"default":"CURRENT_TIMESTAMP"})
      */
     private $createdAt;
 
@@ -41,6 +41,7 @@ class Country
 
     public function __construct()
     {
+        $this->createdAt=new \DateTime();
         $this->Cities = new ArrayCollection();
     }
 
