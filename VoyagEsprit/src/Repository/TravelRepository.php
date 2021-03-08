@@ -53,7 +53,7 @@ class TravelRepository extends ServiceEntityRepository
 
    ;
 
-      return $qb->getQuery()->getResult();
+      return $qb->getQuery()->getOneOrNullResult();
 
     }
 

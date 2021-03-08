@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\CommentRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=CommentRepository::class)
@@ -54,10 +55,18 @@ class Comment
         $this->createdAt=new \DateTime();
     }
 
+    /**
+     * @Groups({"travel_read"})
+     */
+
     public function getId(): ?int
     {
         return $this->id;
     }
+
+    /**
+     * @Groups({"travel_read"})
+     */
 
     public function getBody(): ?string
     {
@@ -95,6 +104,10 @@ class Comment
         return $this;
     }
 
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
+
     public function getRating(): ?float
     {
         return $this->rating;
@@ -118,6 +131,10 @@ class Comment
 
         return $this;
     }
+
+    /**
+     * @Groups({"travel_read"})
+     */
 
     public function getUser(): ?User
     {

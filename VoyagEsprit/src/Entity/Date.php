@@ -6,6 +6,7 @@ use App\Repository\DateRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=DateRepository::class)
@@ -50,15 +51,22 @@ class Date
         $this->travels = new ArrayCollection();
     }
 
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
     public function getId(): ?int
     {
         return $this->id;
     }
 
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
     public function getStartAt(): ?\DateTimeInterface
     {
         return $this->startAt;
     }
+
 
     public function setStartAt(?\DateTimeInterface $startAt): self
     {
@@ -66,6 +74,10 @@ class Date
 
         return $this;
     }
+
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
 
     public function getEndAt(): ?\DateTimeInterface
     {
