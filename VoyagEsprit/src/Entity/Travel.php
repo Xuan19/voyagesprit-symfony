@@ -11,6 +11,7 @@ use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TravelRepository::class)
+//  * @ORM\HasLifecycleCallbacks()
  */
 class Travel
 {
@@ -378,4 +379,38 @@ class Travel
 
         return $this;
     }
+
+
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
+
+    public function getAverageRating()
+    {
+        $commentsList = $this->getComments();
+
+        $ratingList = [];
+
+        foreach ($commentsList as $comment) {
+            $rating = $comment->getRating();
+
+            $ratingList[] = $rating;
+        }
+
+        if (!empty($ratingList)) {
+            $averageRating = array_sum($ratingList) / count($ratingList);
+       } else {$averageRating = 0;}
+       
+       return $averageRating;
+
+    }
+
+//    /**
+//     * @ORM\PreUpdate
+//     */
+//    public function onPreUpdate()
+//    {
+//       $this->updateAt = new \DateTime();
+
+//     }
 }

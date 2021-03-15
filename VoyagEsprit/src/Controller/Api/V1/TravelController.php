@@ -14,7 +14,7 @@ class TravelController extends AbstractController
 {
 
     #[Route('/travels', name: 'browse', methods:['GET'])]
-    public function browse(TravelRepository $travelRepository,SerializerInterface $serializer): Response
+    public function browse(TravelRepository $travelRepository): Response
     {
         $travels=$travelRepository->getTravelsWithRelations();
 

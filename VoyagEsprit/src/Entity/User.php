@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
@@ -77,6 +78,8 @@ class User implements UserInterface
      */
     private $updatedAt;
 
+
+
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="user")
      */
@@ -85,6 +88,7 @@ class User implements UserInterface
     public function __construct()
     {
         $this->comments = new ArrayCollection();
+        $this->createdAt=new \DateTime();
     }
 
     public function getId(): ?int
@@ -92,6 +96,9 @@ class User implements UserInterface
         return $this->id;
     }
 
+     /**
+     * @Groups({"api_v1_register"})
+     */
     public function getEmail(): ?string
     {
         return $this->email;
@@ -106,7 +113,6 @@ class User implements UserInterface
 
     /**
      * A visual identifier that represents this user.
-     *
      * @see UserInterface
      */
     public function getUsername(): string
@@ -241,6 +247,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @Groups({"api_v1_register"})
+     */
     public function getFirstName(): ?string
     {
         return $this->firstName;
@@ -253,6 +262,9 @@ class User implements UserInterface
         return $this;
     }
 
+    /**
+     * @Groups({"travel_read","api_v1_register"})
+     */
     public function getLastName(): ?string
     {
         return $this->lastName;

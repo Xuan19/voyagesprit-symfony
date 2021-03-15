@@ -25,17 +25,18 @@ App\Entity\Travel:
         baseline: '<text(55)>'
         price : '<numberBetween(150,1800)>'
         cities : '<numberBetween(1,3)>x @city_*'
-        dates : '1x @date_*'
+        dates : '<numberBetween(1,3)>x @date_*'
         categories: '<numberBetween(1,3)>x @category_*'
         is_liked: "<boolean()>"
         price_details: "<text(200)>"
         display_homepage: "<boolean()>"
 
 App\Entity\Comment:
-    comment_{1..24}:
+    comment_{1..100}:
         body : '<text(255)>'
         rating : '<numberBetween(1,5)>'
         travel : '@travel_*'
+        user : '@user_*'
 
 App\Entity\User:
     user_{1..50}:
