@@ -9,7 +9,7 @@ use App\Repository\TravelRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 
 
-#[Route('/api/v1', name: 'api_v1_travel_')]
+#[Route('/api/v1/public', name: 'api_v1_travel_')]
 class TravelController extends AbstractController
 {
 

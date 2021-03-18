@@ -186,7 +186,9 @@ class User implements UserInterface
 
         return $this;
     }
-
+   /**
+     * @Groups({"api_v1_profile"})
+     */
     public function getPhoneNumber(): ?string
     {
         return $this->phoneNumber;
@@ -210,7 +212,9 @@ class User implements UserInterface
 
         return $this;
     }
-
+   /**
+     * @Groups({"api_v1_profile"})
+     */
     public function getBirthday(): ?\DateTimeInterface
     {
         return $this->birthday;
