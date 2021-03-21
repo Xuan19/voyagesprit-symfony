@@ -18,9 +18,27 @@ class TravelRepository extends ServiceEntityRepository
     {
         parent::__construct($registry, Travel::class);
     }
+    
+        public function getMainTravels()
+        {
+         $qb=$this->createQueryBuilder('t');
+    
+         $qb
+            ->addSelect('d,c,cs')
+            ->leftjoin('t.categories','c')
+            ->leftjoin('t.dates','d')
+            ->leftjoin('t.cities','cs')
+            ->orderBy('d.startAt', 'DESC')
+            ->where('t.display_homepage = 1')
+    
+       ;
+    
+          return $qb->getQuery()->getResult();
+    
+        }
 
 
-    public function getTravelsWithRelations()
+    public function getTravels($startDate,$destination,$category)
     {
      $qb=$this->createQueryBuilder('t');
 
@@ -29,16 +47,28 @@ class TravelRepository extends ServiceEntityRepository
         ->leftjoin('t.categories','c')
         ->leftjoin('t.dates','d')
         ->leftjoin('t.cities','cs')
-        ->orderBy('d.startAt', 'DESC')
-
+        ->orderBy('d.startAt', 'DESC')    
    ;
+    if ($category) {
+        $qb
+        ->andHaving('c.name = :category')
+        ->setParameter(':category',$category);
+    }
+    if ($destination){
+        $qb->andHaving('cs.name = :destination')
+        ->setParameter(':destination',$destination);
+    }
+    if ($startDate){
+        $qb->andwhere('d.startAt >= :startDate')
+        ->setParameter(':startDate',$startDate);
+    }
 
-      return $qb->getQuery()->getResult();
+      return $qb->getQuery()->getResult();   
 
     }
 
 
-    public function getTravelWithRelations(int $id)
+    public function getTravel(int $id)
     {
      $qb=$this->createQueryBuilder('t');
 

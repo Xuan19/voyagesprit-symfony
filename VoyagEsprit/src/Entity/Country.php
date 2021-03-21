@@ -22,7 +22,7 @@ class Country
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $countryName;
 
     /**
      * @ORM\Column(type="datetime",options={"default":"CURRENT_TIMESTAMP"})
@@ -50,14 +50,14 @@ class Country
         return $this->id;
     }
 
-    public function getName(): ?string
+    public function getCountryName(): ?string
     {
-        return $this->name;
+        return $this->countryName;
     }
 
-    public function setName(string $name): self
+    public function setCountryName(string $countryName): self
     {
-        $this->name = $name;
+        $this->countryName = $countryName;
 
         return $this;
     }

@@ -19,6 +19,20 @@ class CityRepository extends ServiceEntityRepository
         parent::__construct($registry, City::class);
     }
 
+    public function getCitiesWithCountry()
+    {
+     $qb=$this->createQueryBuilder('cs');
+
+     $qb
+        ->select('cs.cityName')
+        ->addSelect('cts.countryName')
+        ->leftjoin('cs.country','cts')
+   ;
+
+      return $qb->getQuery()->getResult();
+
+    }
+
     // /**
     //  * @return City[] Returns an array of City objects
     //  */

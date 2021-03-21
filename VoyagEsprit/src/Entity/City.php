@@ -23,7 +23,7 @@ class City
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $name;
+    private $cityName;
 
     /**
      * @ORM\ManyToMany(targetEntity=Travel::class, inversedBy="cities")
@@ -63,14 +63,14 @@ class City
      * @Groups({"travel_browse","travel_read"})
      */
 
-    public function getName(): ?string
+    public function getCityName(): ?string
     {
-        return $this->name;
+        return $this->cityName;
     }
 
-    public function setName(string $name): self
+    public function setCityName(string $cityName): self
     {
-        $this->name = $name;
+        $this->cityName = $cityName;
 
         return $this;
     }
