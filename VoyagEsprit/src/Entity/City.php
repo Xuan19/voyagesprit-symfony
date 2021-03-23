@@ -126,6 +126,9 @@ class City
         return $this;
     }
 
+    /**
+     * @Groups({"travel_browse","travel_read"})
+     */
     public function getCountry(): ?Country
     {
         return $this->country;

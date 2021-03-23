@@ -17,30 +17,38 @@ use Symfony\Component\Serializer\SerializerInterface;
 class TravelController extends AbstractController
 {
 
-    #[Route('/main_travels', name: 'browse_main', methods:['GET'])]
-    public function browseMain(TravelRepository $travelRepository): Response
+    #[Route('/main_travels_form_info', name: 'travel_browse', methods:['GET'])]
+    public function browseMainFormInfo(
+        TravelRepository $travelRepository,
+        CategoryRepository $categoryRepository,
+        CityRepository $cityRepository,
+        ): Response
     {
-        
+       $listCategories=$categoryRepository->getCategoriesName();
+       $listDestinations=$cityRepository->getCitiesWithCountry();
+       $formInfo=['categories'=>$listCategories,'destinations'=>$listDestinations];
         
         $travels=$travelRepository->getMainTravels();
 
-        // $arrayTravels=$serializer->normalize($travels,null,['groups'=>'travel_browse']);
-        
-        // return $this->json($arrayTravels);
+        $travelInfo=['mainTravels'=>$travels,'formInfo'=>$formInfo];
 
         return $this->json(
-        $travels,
+        $travelInfo,
         200,
         [],
         ['groups' => 'travel_browse']);
     }
 
     #[Route('/travels', name: 'browse_filter', methods:['POST'])]
-    public function browseFilter(Request $request,SerializerInterface $serializer,TravelRepository $travelRepository): Response
+    public function browseFilter(
+        Request $request,
+        SerializerInterface $serializer,
+        TravelRepository $travelRepository,
+        ): Response
     {
         $jsonData=json_decode($request->getContent());
 
-        //dd($jsonData);
+        // dd($jsonData);
         $startDate=new \DateTime($jsonData->startDate);
         $destination=$jsonData->destination;
         $category=$jsonData->category;
@@ -58,20 +66,20 @@ class TravelController extends AbstractController
         ['groups' => 'travel_browse']);
     }
 
-    #[Route('/form_info', name: 'formInfo', methods:['GET'])]
-    public function formInfo(CategoryRepository $categoryRepository,CityRepository $cityRepository): Response
-    {
-       $listCategories=$categoryRepository->getCategoriesName();
-       $listDestinations=$cityRepository->getCitiesWithCountry();
-    //    dd($listDestinations);
-    //    dd($listCategories);
-        $formInfo=['categories'=>$listCategories,'destinations'=>$listDestinations];
+    // #[Route('/form_info', name: 'formInfo', methods:['GET'])]
+    // public function formInfo(CategoryRepository $categoryRepository,CityRepository $cityRepository): Response
+    // {
+    //    $listCategories=$categoryRepository->getCategoriesName();
+    //    $listDestinations=$cityRepository->getCitiesWithCountry();
+    // //    dd($listDestinations);
+    // //    dd($listCategories);
+    //     $formInfo=['categories'=>$listCategories,'destinations'=>$listDestinations];
 
-        return $this->json(
-        $formInfo,
-        200,
-        );
-    }
+    //     return $this->json(
+    //     $formInfo,
+    //     200,
+    //     );
+    // }
 
     #[Route('/travel/{id}', name: 'read', methods:['GET'])]
 

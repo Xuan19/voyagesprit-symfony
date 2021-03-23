@@ -43,10 +43,11 @@ class TravelRepository extends ServiceEntityRepository
      $qb=$this->createQueryBuilder('t');
 
      $qb
-        ->addSelect('d,c,cs')
+        ->addSelect('d,c,cs,cts')
         ->leftjoin('t.categories','c')
         ->leftjoin('t.dates','d')
         ->leftjoin('t.cities','cs')
+        ->leftjoin('cs.country','cts')
         ->orderBy('d.startAt', 'DESC')    
    ;
     if ($category) {
@@ -55,7 +56,7 @@ class TravelRepository extends ServiceEntityRepository
         ->setParameter(':category',$category);
     }
     if ($destination){
-        $qb->andHaving('cs.name = :destination')
+        $qb->andHaving('cts.countryName = :destination')
         ->setParameter(':destination',$destination);
     }
     if ($startDate){
