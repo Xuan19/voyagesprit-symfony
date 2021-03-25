@@ -1,6 +1,6 @@
 <?php
-
 namespace App\Controller\Api\V1;
+
 use App\Entity\Travel;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -11,6 +11,7 @@ use App\Repository\CategoryRepository;
 use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
 use Symfony\Component\Serializer\SerializerInterface;
+use App\ImageOptimizer;
 
 
 #[Route('/api/v1/public', name: 'api_v1_travel_')]
@@ -22,6 +23,8 @@ class TravelController extends AbstractController
         TravelRepository $travelRepository,
         CategoryRepository $categoryRepository,
         CityRepository $cityRepository,
+        ImageOptimizer $imageOptimizer,
+        string $photoDir,
         ): Response
     {
        $listCategories=$categoryRepository->getCategoriesName();
@@ -30,8 +33,14 @@ class TravelController extends AbstractController
         
         $travels=$travelRepository->getMainTravels();
 
+        // dd($travels);
+
         $travelInfo=['mainTravels'=>$travels,'formInfo'=>$formInfo];
 
+        foreach ($travels as $t) {
+            foreach($t->getImage() as $img)
+            $imageOptimizer->resize($photoDir.'/'.$img);
+        }
         return $this->json(
         $travelInfo,
         200,

@@ -97,7 +97,7 @@ class User implements UserInterface
     }
 
      /**
-     * @Groups({"api_v1_register"})
+     * @Groups({"api_v1_register","api_v1_profile"})
      */
     public function getEmail(): ?string
     {
@@ -252,7 +252,7 @@ class User implements UserInterface
     }
 
     /**
-     * @Groups({"api_v1_register"})
+     * @Groups({"api_v1_register","api_v1_profile"})
      */
     public function getFirstName(): ?string
     {
@@ -267,7 +267,7 @@ class User implements UserInterface
     }
 
     /**
-     * @Groups({"travel_read","api_v1_register"})
+     * @Groups({"travel_read","api_v1_register","api_v1_profile"})
      */
     public function getLastName(): ?string
     {
