@@ -12,7 +12,7 @@ use App\Repository\CityRepository;
 use App\Repository\CountryRepository;
 use Symfony\Component\Serializer\SerializerInterface;
 use App\ImageOptimizer;
-
+use App\DataFixtures\Providers\ListTravelImages;
 
 #[Route('/api/v1/public', name: 'api_v1_travel_')]
 class TravelController extends AbstractController
@@ -33,14 +33,13 @@ class TravelController extends AbstractController
         
         $travels=$travelRepository->getMainTravels();
 
-        // dd($travels);
-
         $travelInfo=['mainTravels'=>$travels,'formInfo'=>$formInfo];
 
         foreach ($travels as $t) {
             foreach($t->getImage() as $img)
             $imageOptimizer->resize($photoDir.'/'.$img);
         }
+        
         return $this->json(
         $travelInfo,
         200,
@@ -75,20 +74,46 @@ class TravelController extends AbstractController
         ['groups' => 'travel_browse']);
     }
 
-    // #[Route('/form_info', name: 'formInfo', methods:['GET'])]
-    // public function formInfo(CategoryRepository $categoryRepository,CityRepository $cityRepository): Response
-    // {
-    //    $listCategories=$categoryRepository->getCategoriesName();
-    //    $listDestinations=$cityRepository->getCitiesWithCountry();
-    // //    dd($listDestinations);
-    // //    dd($listCategories);
-    //     $formInfo=['categories'=>$listCategories,'destinations'=>$listDestinations];
+    #[Route('/test', name: 'formInfo', methods:['GET'])]
+    public function getImages(SerializerInterface $serializer,ListTravelImages $listTravelImages)
+    {
+        // $list=[];
 
-    //     return $this->json(
-    //     $formInfo,
-    //     200,
-    //     );
-    // }
+        // $images=glob($photoDir.'/*');
+    
+        // foreach($images as $image)
+        // {
+        //     $list[] = explode($photoDir.'/',$image)[1];
+        // };
+        // $list1=$serializer->normalize($list,null);
+        // return $serializer->serialize($listTravelImages->getImages(),'json'); 
+        // return $listTravelImages->getImages($photoDir);
+        // $listTravelImages=new ListTravelImages($photoDir);
+        // $photoDir="C:\Users\XUAN\Desktop\o'clock\ProjetPerso\VoyagEsprit-Symfony\VoyagEsprit\public\assets\images";
+ 
+        // return $this->json(
+        //     $listTravelImages->getImages(),
+        //    );  
+        // return $this->json(
+        //     $list,
+        //    );  
+        // $categories = [
+        //     'Ski',
+        //     'Croisière',
+        //     'Circuit',
+        //     'Séjour',
+       
+        // ];
+        
+        // return $categories;
+
+        // $package = new Package(new EmptyVersionStrategy());
+        // $photoDir= $package->getBasePath('/');
+        // $photoDir= \dirname(__DIR__);
+        
+        //     dd($photoDir);
+        // return $photoDir;
+    }
 
     #[Route('/travel/{id}', name: 'read', methods:['GET'])]
 

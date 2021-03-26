@@ -1,10 +1,10 @@
 App\Entity\Country:
     country_{1..15}: 
-        name: '<country()>'
+        country_name: '<country()>'
 
 App\Entity\City:
     city_{1..40}: 
-        name: '<city()>'
+        city_name: '<city()>'
         country : '@country_*'
 
 App\Entity\Category:
