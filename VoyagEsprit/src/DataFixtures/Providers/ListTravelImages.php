@@ -1,19 +1,19 @@
 <?php
+
 namespace App\DataFixtures\Providers;
 
-class ListTravelImages 
-{    
-   public function getImages()
+class ListTravelImages
+{
+    public function getImages()
     {
-        $list=[];
+        $list = [];
 
-        $photoDir="C:\Users\XUAN\Desktop\o'clock\ProjetPerso\VoyagEsprit-Symfony\VoyagEsprit\public\assets\images";
+        $photoDir = dirname(__DIR__ ,3) . "/public/assets/images/";
 
-        $images=glob($photoDir.'/*');
-    
-        foreach($images as $image)
-        {
-            $list[] = explode($photoDir.'/',$image)[1];
+        $images = glob($photoDir . '/*');
+
+        foreach ($images as $image) {
+            $list[] = explode($photoDir . '/', $image)[1];
         };
 
         return $list;
